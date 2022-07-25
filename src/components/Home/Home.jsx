@@ -1,12 +1,8 @@
-import React from "react";
-
 import Form from "../form/Form";
 import Table from "../table/Table";
 import "./Home.css";
 
-
 const Home = () => {
-
   return (
     <div
       className="d-flex justify-content-center flex-column align-items-center"

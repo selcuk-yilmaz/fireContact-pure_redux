@@ -1,23 +1,32 @@
 import React, { useState } from 'react'
-import Table from '../table/Table'
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { useDispatch } from 'react-redux';
-import {addTodo} from "../../redux/actions/todoActions";
+import { addTodo} from "../../redux/actions/todoActions";
 
 
 const FormContainer = () => {
-  const [text, setText] = useState();
-const [number, setNumber] = useState();
-const [gender, setGender] = useState();
+  // const [total, setTotal] = useState("");
+  const [name, setName] = useState("");
+const [number, setNumber] = useState("");
+const [gender, setGender] = useState("");
+// const [total, setTotal] = useState([name,number,gender])
 const dispatch= useDispatch()
 
 const handleSubmit=(e)=>{
 e.preventDefault();
-dispatch(addTodo(text));
+// const newObj={name:name,number:number,gender:gender}
+// setTotal(newObj);
+// console.log(total);
+// console.log(newObj);
+
+dispatch(addTodo({name:name,number:number,gender:gender} ));
+setName("");
+setNumber("");
+setGender("");
 
 }
 
-
+console.log(gender);
   return (
     <div className="col-md-4 col-xs-12 mb-5">
       <div className="">
@@ -51,6 +60,8 @@ dispatch(addTodo(text));
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   placeholder="Name"
+                  value={name}
+                  onChange={(e)=>setName(e.target.value)}
                 />
               </div>
               <div style={{ position: "relative" }}>
@@ -63,11 +74,13 @@ dispatch(addTodo(text));
                   }}
                 />
                 <input
-                  type="email"
+                  type="text"
                   className="form-control ps-4"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   placeholder="Phone Number"
+                  value={number}
+                  onChange={(e)=>setNumber(e.target.value)}
                 />
               </div>
               <div className="input-group mb-3">
@@ -82,7 +95,11 @@ dispatch(addTodo(text));
                   }}
                   id="inputGroupSelect03"
                   placeholder="Gender"
+                  value={gender}
+                  onChange={(e)=>setGender(e.target.value)}
+                  required
                 >
+                  <option value="">GENDER</option>
                   <option value="male">👨Male</option>
                   <option value="female">👩Female</option>
                   <option value="other">😮Other</option>

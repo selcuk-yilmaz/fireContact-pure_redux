@@ -1,8 +1,9 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
-const Table = () => {
-    const todo= useSelector((state) => state.todoList);
+const Table = ({text,number,gender} ) => {
+    const todoList = useSelector((state) => state.todoRed.todoList);
+    console.log(todoList);
   return (
     <div className="col-md-8 col-xs-12">
       <div className="mx-5">
@@ -19,17 +20,20 @@ const Table = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
+            {todoList?.map((todo,index) => (
+            <tr key={todo.id} >
+              <th scope="row">{index+1} </th>
+              <td>{todo.text}</td>
+              <td>{todo.number}</td>
+              <td>{todo.gender}</td>
+            </tr>               
+            ))}
+
           </tbody>
         </table>
       </div>
     </div>
-  )
+  );
 }
 
 export default Table
