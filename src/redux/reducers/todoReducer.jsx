@@ -12,7 +12,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
           ...state.todoList,
           {
             id: payload.id,
-            text: payload.name,
+            name: payload.name,
             number: payload.number,
             gender: payload.gender,
           },
@@ -20,13 +20,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
       };
     case SET_TODO:
       return {
-        payload.map((data)=>({
-        id: data.id,
-            text:data.name,
-            number: data.number,
-            gender: data.gender,
-        }))
-
+        todoList: payload,
       };
 
     default:

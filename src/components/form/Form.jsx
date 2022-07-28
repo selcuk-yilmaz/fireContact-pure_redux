@@ -1,32 +1,54 @@
-import React, { useState } from 'react'
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
-import { useDispatch } from 'react-redux';
-import { addTodo} from "../../redux/actions/todoActions";
+import { useDispatch } from "react-redux";
+import { db } from "../../auth/firebaseConfig";
+import { addTodo } from "../../redux/actions/todoActions";
 
-
-const FormContainer = () => {
+const FormContainer = ({
+  personList,
+  setPersonList,
+  getTodo,
+  personCollectionRef,
+}) => {
   // const [total, setTotal] = useState("");
   const [name, setName] = useState("");
-const [number, setNumber] = useState("");
-const [gender, setGender] = useState("");
-// const [total, setTotal] = useState([name,number,gender])
-const dispatch= useDispatch()
+  const [phone, setNumber] = useState("");
+  const [gender, setGender] = useState("");
+  // const [total, setTotal] = useState([name,number,gender])
+  // const dispatch= useDispatch()
+  const createTodo = async (name, phone, gender) => {
+    await addDoc(personCollectionRef, {
+      name: name,
+      phone: phone,
+      gender: gender,
+    });
+  };
+  // const [personList, setPersonList] = useState([]);
+  // const toDoCollectionRef = collection(db, "person");
 
-const handleSubmit=(e)=>{
-e.preventDefault();
-// const newObj={name:name,number:number,gender:gender}
-// setTotal(newObj);
-// console.log(total);
-// console.log(newObj);
+  // const getTodo = async () => {
+  //   const data = await getDocs(toDoCollectionRef);
 
-dispatch(addTodo({name:name,number:number,gender:gender} ));
-setName("");
-setNumber("");
-setGender("");
+  //   setPersonList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   // dispatch(setTodo(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))));
+  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // const newObj={name:name,number:number,gender:gender}
+    // setTotal(newObj);
+    // console.log(total);
+    // console.log(newObj);
 
-}
+    // dispatch(addTodo({name:name,number:number,gender:gender} ));
+    setName("");
+    setNumber("");
+    setGender("");
+    createTodo(name, phone, gender);
+    getTodo();
+  };
 
-console.log(gender);
+  console.log(phone);
   return (
     <div className="col-md-4 col-xs-12 mb-5">
       <div className="">
@@ -61,7 +83,7 @@ console.log(gender);
                   aria-describedby="emailHelp"
                   placeholder="Name"
                   value={name}
-                  onChange={(e)=>setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div style={{ position: "relative" }}>
@@ -79,8 +101,8 @@ console.log(gender);
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   placeholder="Phone Number"
-                  value={number}
-                  onChange={(e)=>setNumber(e.target.value)}
+                  value={phone}
+                  onChange={(e) => setNumber(e.target.value)}
                 />
               </div>
               <div className="input-group mb-3">
@@ -96,7 +118,7 @@ console.log(gender);
                   id="inputGroupSelect03"
                   placeholder="Gender"
                   value={gender}
-                  onChange={(e)=>setGender(e.target.value)}
+                  onChange={(e) => setGender(e.target.value)}
                   required
                 >
                   <option value="">GENDER</option>
@@ -117,6 +139,6 @@ console.log(gender);
       </div>
     </div>
   );
-}
+};
 
-export default FormContainer
+export default FormContainer;
