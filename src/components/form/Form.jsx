@@ -2,7 +2,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { db } from "../../auth/firebaseConfig";
+import { db } from "../../utils/firebaseConfig";
 import { addTodo } from "../../redux/actions/todoActions";
 
 const FormContainer = ({
