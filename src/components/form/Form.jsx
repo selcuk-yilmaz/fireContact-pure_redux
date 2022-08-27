@@ -1,22 +1,18 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { db } from "../../utils/firebaseConfig";
-import { addTodo } from "../../redux/actions/todoActions";
+// import { addTodo } from "../../redux/actions/todoActions";
+import { getTodo } from "../../redux/thunk/dataThunk";
+const personCollectionRef = collection(db, "person");
 
-const FormContainer = ({
-  personList,
-  setPersonList,
-  getTodo,
-  personCollectionRef,
-}) => {
-  // const [total, setTotal] = useState("");
+const FormContainer = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [phone, setNumber] = useState("");
   const [gender, setGender] = useState("");
-  // const [total, setTotal] = useState([name,number,gender])
-  // const dispatch= useDispatch()
+
   const createTodo = async (name, phone, gender) => {
     await addDoc(personCollectionRef, {
       name: name,
@@ -24,31 +20,25 @@ const FormContainer = ({
       gender: gender,
     });
   };
-  // const [personList, setPersonList] = useState([]);
-  // const toDoCollectionRef = collection(db, "person");
 
-  // const getTodo = async () => {
-  //   const data = await getDocs(toDoCollectionRef);
-
-  //   setPersonList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //   // dispatch(setTodo(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))));
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const newObj={name:name,number:number,gender:gender}
-    // setTotal(newObj);
-    // console.log(total);
-    // console.log(newObj);
-
-    // dispatch(addTodo({name:name,number:number,gender:gender} ));
     setName("");
     setNumber("");
     setGender("");
     createTodo(name, phone, gender);
-    getTodo();
+
+    dispatch(getTodo());
   };
 
-  console.log(phone);
+  // const handleUpdate=()=>{
+
+  // };
+
+  useEffect(() => {
+    dispatch(getTodo());
+  }, [dispatch]);
+
   return (
     <div className="col-md-4 col-xs-12 mb-5">
       <div className="">
