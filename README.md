@@ -1,6 +1,6 @@
 ## Live Link of the Project
 
-[click here for see the cite]()
+[click here for see the cite](https://firecontact-pure-redux.netlify.app/)
 
 ## Hi I’m Selçuk 👋. Welcome to my  firecontact-pure-redux App 
 
